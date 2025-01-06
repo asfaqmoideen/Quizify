@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background: url('/assets/main-bg.png') no-repeat center center/cover;
+}
+
+body{
+    display:flex;
+    flex-direction: column;
+}
+.viewport{
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+    display: flex;
+}
+.main-content{
+    width: 60%;
+    margin: 2rem;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1rem;
+    background-color: plum;
+    align-items: center;
+    padding: .5rem;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    align-items: center;
+}
+
+.header{
+    font-style: oblique;
+    background-color: whitesmoke;
+    justify-content: space-between;
+}
+
+.hidden{
+    display: none;
+}
+
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: plum;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items:center ;
+    margin: 1rem;
+}
+
+.form-group{
+    margin: 1rem;
+}
+
+
+.login-container{
+    background: white;
+    max-height: max-content;
+    border-radius: 1rem;
+    border: plum solid 2px;
+}
+
+.btnclass, input{
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 20em;
+}
+
+.btn-img{
+    height :20px;
+    width: 20x;
+}
+
+#main-bg{
+    height: 300px;
+    width: 400px;
+}
+.logo{
+    height: 3rem;
+    width: 4rem;
+}
+
+.signspan{
+    color: blue; 
+    font-weight: bold;
+    cursor: pointer;
+ }
+
+ .error{
+    color: red;
+ }
