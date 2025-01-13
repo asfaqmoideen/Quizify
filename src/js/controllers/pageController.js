@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
-      const sidebarItems = document.querySelectorAll(".sidebar ul li");
+      const sidebarItems = document.querySelectorAll(".headerlist li");
       const contentSections = document.querySelectorAll(".content");
     
-      
         sidebarItems.forEach((item) => {
             item.addEventListener("click", () => {
-              switchContent(item.id);
+              if(item.id != "profilebtn"){
+                switchContent(item.id);
+              }
             });
           });
   
@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (section.id === `${id}-content`) {
             section.classList.add("active");
           }
-          console.log("da", id);
         });
     
         sidebarItems.forEach((item) => {
