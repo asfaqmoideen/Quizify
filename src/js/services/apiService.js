@@ -5,16 +5,14 @@ export class APIService{
 
     }
 
-    tryPostingData(contexta)
-    {
+    async getQuizTypes(){
         try{
-            const response = fetch(BASE_URL)
-            if(!response.ok){
-                throw new Error(`Unable to ${context}`);
-            }
+            const response = await fetch(`${BASE_URL}/mcq/types`);
+            return response.json();
         }
-        catch(e){
-            console.log(e.message);
+        catch(error){
+            console.error(error);
         }
     }
+
 }

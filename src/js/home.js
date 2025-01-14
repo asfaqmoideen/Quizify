@@ -1,17 +1,18 @@
 import {APIService} from "./services/apiService.js";
-import { MockAPI } from "./services/mockAPI.js";
 import { UserConfirmationService } from "./services/UserConfirmationService.js";
-
-document.addEventListener('DOMContentLoaded', () => {
+import { AccessValidationService } from "./services/AccessValidationService.js";
+document.addEventListener('DOMContentLoaded', async () => {
     const quizCon = new QuizController();
+    const accessvalidate = new AccessValidationService();
 
-    quizCon.setQuizTypes();
+    await accessvalidate.validateCurrentUser(sessionStorage.getItem("token"));
+   // quizCon.setQuizTypes();
 })
 
 
 class QuizController{
     constructor(){
-        this.quizApi = new MockAPI();
+        this.quizApi = new APIService();
         this.quizUi = new QuizUIController(this);
     }
 

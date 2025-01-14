@@ -1,4 +1,7 @@
 "use strict";
+
+import { BASE_URL } from "../constants";
+
 export class AccessValidationService {
   validateCurrentUser = async (accessToken) => {
     if (!accessToken) {
@@ -6,10 +9,10 @@ export class AccessValidationService {
       return;
     }
     try {
-      const response = await fetch('https://dummyjson.com/auth/me', {
+      const response = await fetch(`${BASE_URL}/auth/me`, {
         method: "GET",
         headers: {
-          "Authorization": accessToken,
+          "Authorization": `Bearer ${accessToken}`,
         },
       });
       if (response.status === 401) {

@@ -15,8 +15,12 @@ export class LoginController{
           })
           .then(res => res.json())
           .then(token => {
-            sessionStorage.setItem("token", token.accessToken);
+            sessionStorage.setItem("token", token.access_token);
             document.location = "/src/pages/home.html";
           })
+    }
+
+    tryRegisteringNewUser(form){
+      
     }
 }
