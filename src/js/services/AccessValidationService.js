@@ -11,8 +11,8 @@ export class AccessValidationService {
       });
 
       if (response.status == 400) {
-        setTimeout(() => {document.location = `/index.html`}, 5000)
-        throw new Error("Session Expired");
+        const newToken =  this.tryRefreshingToken(accessToken);
+        this.validateCurrentUser(newToken);
       }
       if (response.status !== 200) {
         throw new Error("Could not fetch data");
@@ -24,4 +24,24 @@ export class AccessValidationService {
       throw err;
     }
   };
+
+  tryRefreshingToken = async (accessToken)=> {
+    try{
+      const response = await fetch(`${BASE_URL}/auth/refresh`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+        },
+
+      });
+      if(!response.ok){
+        throw new Error("Couldn't refresh the session");
+      }
+      const token = response.json();
+      return token.access_token;
+    }
+    catch (err) {
+      throw err;
+    }
+  }
 }
