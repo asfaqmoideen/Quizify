@@ -30,27 +30,24 @@ header{
     padding: .5rem;
 }
 
-ul{
-    padding: 0;
-    margin: 0;
+header ul{
+    margin-bottom: 0;
 }
 
-ul li{
+header ul li{
     display: inline;
     padding-inline: 1rem;
     list-style: none;
-    margin: 0;
     cursor: pointer;
 }
 
-.active ul li{
-    text-decoration: underline;
+header li .active{
+    font-weight: bold;
 }
 
 
 .content{
-    display: none;
-    
+    display: none; 
 }
 
 .content.active{
@@ -72,12 +69,13 @@ footer{
 
 .tile{
     box-shadow: 2px 2px 2px 1px;
-    border-radius: 3px;
+    border-radius: 1rem;
     background-color: plum;
     display: flex;
     justify-content: center;
     cursor: pointer;
     padding: 2rem;
+    font-weight: bold;
 }
 
 .quiz-type-container{
@@ -93,10 +91,9 @@ footer{
 }
 
 
-.container-confirmation {
+.container-confirmation, .quizresults {
     padding: 20px;
-    background-color: #fff;
-    border: 1px solid red;
+    background-color:whitesmoke;
     border-radius: 8px;
     position: absolute;
     top: 50%;
@@ -118,9 +115,57 @@ footer{
     border-radius: 5px;
     background-color: white;
 }
-.quiz-box legend {
-    font-weight: bold;
-}
+
 .option {
     margin: 5px 0;
+}
+
+.headgrp{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profilecard{
+    position: fixed;
+    top: 5%;
+    right: 3%;
+    z-index: 1000;
+    background: white;
+    width: max-content;
+    border-radius: 10px;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 1rem 2rem;
+}
+.profilecard ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+}
+.profilecard ul li{
+    padding: 0;
+}
+
+button{
+    border: none;
+    background-color: aliceblue;
+    border-radius: 1rem;
+}
+
+.textbtn{
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+.attemptedoption{
+    font-weight: bold;
+}
+
+.correctoption{
+    color: green;
 }

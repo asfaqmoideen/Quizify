@@ -1,12 +1,8 @@
 import { BASE_URL } from "../constants";
 
 export class APIService{
-    constructor(){
-
-    }
 
     async tryFetchingData(endpoint, method , bodyData){
-        console.log(JSON.stringify(bodyData));
         try {
             const response = await fetch(`${BASE_URL}/${endpoint}`,{
                 method: method,
@@ -20,7 +16,7 @@ export class APIService{
             return response.json();
         }
         catch(error){
-            console.log(error);
+           throw error;
         }
     }
     async getQuizTypes(){

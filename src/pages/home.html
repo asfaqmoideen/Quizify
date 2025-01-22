@@ -25,9 +25,13 @@
         </header>
         <main>  
             <div id="home-content" class="content active">
-                <h3>Choose your Quiz type</h3>
+                <div class="headgrp">
+                    <h3 id="quizheading">Choose your Quiz type</h3>
+                </div>
                 <p id="error-home"></p>
-                <div id="quiz-container"></div>
+                <div id="quiz-container">
+                    
+                </div>
                 <div class="quiz-type-container" id="quiztypecont">
                 </div>
             </div>
@@ -49,6 +53,21 @@
                   <button type="button" id="yesbtn">Yes</button>
                   <button type="button" id="nobtn">No</button>
                 </div>
+            </div>
+            <div class="profilecard hidden" id="profilecard">
+                <ul>
+                    <li id="username-profilecard"></li>
+                    <li id="userrole-profilecard"></li>
+                    <li id="logout-btn-profilecard" class="textbtn">Logout</li>
+                </ul>
+            </div>
+            <div id="quizresults" class="quizresults hidden">
+                <h3>Your results</h3>
+                <p> Total Score <span id="results-total_score"></span></p>
+                <p> Total Attempts <span id="results-total_attempts"></span></p>
+                <p> Percentage <span id="results-percentage"></span></p>
+                <p id="results-showanswers" class="textbtn">Show Answers</p>
+            </div>
         </main>
         <footer>
             <p>All rights reserved @ Quizify 2025</p>

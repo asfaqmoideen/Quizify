@@ -31,7 +31,6 @@ export class QuizController {
     async trySubmittingQuiz(attemptedAnswers) {
         try {
             const results = await this.quizApi.submitQuiz(attemptedAnswers);
-            console.log(results);
             this.quizUi.displayResults(results);
         }
         catch (error) {
