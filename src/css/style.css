@@ -7,8 +7,7 @@ p{
     margin-bottom: 0 !important
 }
 body{
-    display:flex;
-    flex-direction: column;
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
 }
 .viewport{
     height: 100vh;
@@ -24,10 +23,13 @@ main{
 header{
     display: flex;
     justify-content: space-between;
-    padding-inline: 1rem;
-    background-color: plum;
+    padding-inline: 1rem;   
+    background-color: #fff;
     align-items: center;
     padding: .5rem;
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 header ul{
@@ -70,7 +72,7 @@ footer{
 .tile{
     box-shadow: 2px 2px 2px 1px;
     border-radius: 1rem;
-    background-color: plum;
+    background-color: white;
     display: flex;
     justify-content: center;
     cursor: pointer;
@@ -78,12 +80,13 @@ footer{
     font-weight: bold;
 }
 
+
 .quiz-type-container{
+    flex: 1 ;
     display: flex;  
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    height: 100%;
 }
 
 .content{
@@ -168,4 +171,39 @@ button{
 
 .correctoption{
     color: green;
+}
+
+table{
+    width: 100%;
+}
+
+thead{
+    background-color: gray;
+    font-weight: 700;
+}
+
+table td{
+    padding: .3rem;
+    border-bottom: gray solid 1px;
+    cursor: pointer; 
+}   
+
+.answersmodal, .quiz-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ccc;
+    border-radius: 1rem;
+    height: max-content;
+    width: max-content;
+    height : calc(100vh - 5rem);
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.adminoptions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }

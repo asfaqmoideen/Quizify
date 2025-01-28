@@ -7,8 +7,10 @@ export class QuizUIController {
         this.quizCon = quizCOn;
         this.confirm = new UserConfirmationService();
         this.typesDiv = document.getElementById("quiztypecont");
-        this.attemptedAnswers = [];
+        this.attemptedAnswers = new Map();
         this.resultsKeys = ["total_score","total_attempts","percentage"]
+        this.tableHeadings = ["S. No","Score", "Percentage","Attempted Questions","Attempted At" ,"Action"]
+        this.tableHeadKeys = ["attempted_at","percentage","total_attempts","total_score"]
     }
 
     toogleProfileCard(){
@@ -46,6 +48,7 @@ export class QuizUIController {
     }
     displayError(message, type) {
         document.getElementById(`error-${type}`).textContent = message;
+        setTimeout(() => { document.getElementById(`error-${type}`).textContent =""}, 3000);
     }
 
 
@@ -66,19 +69,22 @@ export class QuizUIController {
             const radioBtn = document.createElement("input");
             radioBtn.type = "radio";
             radioBtn.id = `question_${questionIndex}_option_${key}`;
+            radioBtn.name =  `question_${questionIndex}`
             radioBtn.value = key;
     
          
             const label = document.createElement("label");
             label.setAttribute("for", `question_${questionIndex}_option_${key}`);
             label.textContent = value;
+            label.name =  `question_${questionIndex}`;
     
 
             optionWrapper.appendChild(radioBtn);
             optionWrapper.appendChild(label);
     
             radioBtn.addEventListener("change", () => {
-                this.attemptedAnswers.push({mcq_id : questionData.mcq_id, user_answer : key});
+               // this.attemptedAnswers.push({mcq_id : questionData.mcq_id, user_answer : key});
+                this.attemptedAnswers.set(questionData.mcq_id, key);
             })
             quizBox.appendChild(optionWrapper);
         }
@@ -87,10 +93,8 @@ export class QuizUIController {
     }
     
     displayQuizQuestions(questions) {
-        this.hideQuiztypes(true);
-        document.getElementById("quizheading").textContent = questions[0].type.toUpperCase();
-        const container = document.getElementById("quiz-container");
-        this.clearQuizContainer();
+        const title =  questions[0].type.toUpperCase();
+        const container = this.enableQuizContainer(title);
         questions.forEach((question, index) => {
             const quizBox = this.createQuizBox(question, index);
             container.appendChild(quizBox);
@@ -104,8 +108,8 @@ export class QuizUIController {
         submitButton.textContent = "Submit Quiz";
         submitButton.addEventListener('click', ()=>{
             if(this.quizCon.trySubmittingQuiz(this.attemptedAnswers)){
+                this.attemptedAnswers.clear();
                 this.displayError('Quiz Submitted Successfully', "home");
-                this.attemptedAnswers = [];
             }
         })
         return submitButton;
@@ -121,7 +125,6 @@ export class QuizUIController {
     }
 
     displayResults(results) {
-        this.clearQuizContainer();
         for(let key in results) {
             if(this.resultsKeys.includes(key)) {
                 this.setValues(key, results[key]);
@@ -140,11 +143,6 @@ export class QuizUIController {
 
     setValues(tagId, value) {
         document.getElementById(`results-${tagId}`).textContent = value;
-    }
-
-    clearQuizContainer(){
-        const container = document.getElementById("quiz-container");
-        container.textContent = "";
     }
 
     populateAnswers(data) {
@@ -192,12 +190,83 @@ export class QuizUIController {
     }
     
     displayAttemptedAnswers(answers) {
-        document.getElementById("quizheading").textContent = answers[0].type.toUpperCase() + "  Answers";
-        const container = document.getElementById("quiz-container");
-        this.clearQuizContainer();
+        const tile = answers[0].type.toUpperCase() + "  Answers";
+        const container = this.enableQuizContainer(tile);
+        container.textContent = "";
         answers.forEach((answer, index) => {
             const quizBox = this.createQuizBoxForAttemptedAnswers(answer, index, );
             container.appendChild(quizBox);
         });
+    }
+
+    enableQuizContainer(title){
+        document.getElementById("answersheading").textContent = title;
+        const container = document.getElementById("answersmodal");
+        container.classList.remove("hidden");
+        const quizbox = document.getElementById("quizcontainer");
+        quizbox.textContent = "";
+        return quizbox;
+    }
+    displayHistory(histories){
+        const table = document.querySelector("#history-table tbody");
+        table.textContent = "";
+
+        if(histories.length > 0){
+            this.setTableHeadings();
+            this.setTableBody(histories, table);
+            return;
+        }
+        table.textContent = "No Histories Found";
+    }
+
+    
+
+    setTableHeadings(){
+        const table = document.querySelector("#history-table thead");
+        table.textContent = ""
+        this.tableHeadings.forEach((heading) => {
+            const tabled = document.createElement("td");
+            tabled.textContent = heading
+            table.appendChild(tabled);
+        })
+    }
+
+    setTableBody(histories, body) {
+        histories.forEach((history, index)=>{
+            const row = document.createElement("tr");
+            row.appendChild(this.createRowIndex(index+1));
+            Object.entries(history).forEach(([key,value])=>{
+                if(this.tableHeadKeys.includes(key)){
+                    row.appendChild(this.createTableData(key,value));
+                }
+            })
+            row.appendChild(this.createActionBtn(history.history_id));
+            body.appendChild(row);
+        })
+    }
+
+    createRowIndex(index){
+        const td = document.createElement("td");
+        td.textContent = index;
+        return td;
+    }
+
+    createActionBtn(historyId){
+        const td = document.createElement("td");
+        td.textContent = "Show Answers"
+        td.onclick = ()=>{
+            this.quizCon.tryDisplayingHistory(historyId)
+        }
+        return td;
+    }
+
+    createTableData(key,value){
+        const td = document.createElement("td");
+        if(key == "attempted_at"){
+            td.textContent = new Date(value).toLocaleDateString();
+            return td;
+        }
+        td.textContent= value;
+        return td;
     }
 }

@@ -30,11 +30,36 @@ export class QuizController {
 
     async trySubmittingQuiz(attemptedAnswers) {
         try {
-            const results = await this.quizApi.submitQuiz(attemptedAnswers);
+            const submitted = [] ;
+            attemptedAnswers.forEach((value, key) => {
+                submitted.push({mcq_id: key, user_answer : value});
+            })
+            const results = await this.quizApi.submitQuiz(submitted);
             this.quizUi.displayResults(results);
         }
         catch (error) {
             this.quizUi.displayError(error.message, "home");
+        }
+    }
+
+    async trySettingUserHistory(){
+        try {
+            const history = await this.quizApi.getHistory();
+            this.quizUi.displayHistory(history);
+        }
+        catch(error) {
+            this.quizUi.displayError(error.message, "history")
+        }
+    }
+
+    async tryDisplayingHistory(historyid){
+        try {
+            const answers = await this.quizApi.getHistorybyId(historyid);
+            this.quizUi.populateAnswers(answers.data);
+            
+        }
+        catch(error) {
+            this.quizUi.displayError(error.message, "history")
         }
     }
 }

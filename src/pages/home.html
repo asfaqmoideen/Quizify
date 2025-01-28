@@ -18,33 +18,46 @@
             <ul class="headerlist">
                 <li id="home" class="active">Home</li>
                 <li id="history">My Attempts</li>
-                <li id="profile">Profile</li>
+                <!-- <li id="profile">Profile</li> -->
                 <li id="admin" class="hidden">Manage Users</li>
                 <li id="profilebtn" class="fa-solid fa-user"></li>
             </ul>
         </header>
-        <main>  
-            <div id="home-content" class="content active">
+        <main> 
+            <div id="answersmodal" class="answersmodal hidden">
                 <div class="headgrp">
-                    <h3 id="quizheading">Choose your Quiz type</h3>
+                    <h3 id="answersheading"></h3>
+                    <i class="fa-solid fa-x" id="answersclose"></i>
                 </div>
-                <p id="error-home"></p>
-                <div id="quiz-container">
-                    
-                </div>
-                <div class="quiz-type-container" id="quiztypecont">
-                </div>
+                <div id="quizcontainer"></div>
+            </div> 
+            <div id="home-content" class="content active">
+                    <div class="headgrp">
+                        <h3 id="quizheading">Choose your Quiz type</h3>
+                        <p id="error-home"></p>
+                    </div>
+                    <div class="quiz-type-container" id="quiztypecont"></div>
             </div>
             <div id="history-content" class="content">
                 <h1>History</h1>
                 <p id="error-history"></p>
+                <table id="history-table" class="table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
             </div>
-            <div id="profile-content" class="content">
+            <!-- <div id="profile-content" class="content">
                 <h1>Profile</h1>
                 <p id="error-profile"></p>
-            </div>
+            </div> -->
             <div id="admin-content" class="content">
-                <h1>admin</h1>
+                <h1>Admin </h1>
+                <div class="adminoptions" id="adminoptions">
+                    <table id="userstable">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
                 <p id="error-admin"></p>
             </div>
             <div class="container-confirmation hidden" id="confirmation">
@@ -69,9 +82,6 @@
                 <p id="results-showanswers" class="textbtn">Show Answers</p>
             </div>
         </main>
-        <footer>
-            <p>All rights reserved @ Quizify 2025</p>
-        </footer>
     </div>
 </body>
 </html>

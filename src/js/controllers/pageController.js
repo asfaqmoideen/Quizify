@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       function switchContent(id) {
         contentSections.forEach((section) => {
           section.classList.remove("active");
-          if (section.id === `${id}-content`) {
+          if (section.id === `${id}-content`) {~
             section.classList.add("active");
           }
         });

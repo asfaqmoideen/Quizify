@@ -10,8 +10,8 @@ export class AccessValidationService {
         },
       });
 
-      if (response.status == 400) {
-        const newToken =  this.tryRefreshingToken(accessToken);
+      if (response.status == 403) {
+        const newToken = await this.tryRefreshingToken(accessToken);
         this.validateCurrentUser(newToken);
       }
       if (response.status !== 200) {
@@ -35,6 +35,7 @@ export class AccessValidationService {
 
       });
       if(!response.ok){
+        document.location = '/index.html'
         throw new Error("Couldn't refresh the session");
       }
       const token = response.json();

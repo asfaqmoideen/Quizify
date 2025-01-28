@@ -2,6 +2,7 @@ import { AccessValidationService } from "./services/AccessValidationService.js";
 import { QuizController } from "./controllers/QuizController.js";
 import { QuizUIController } from "./controllers/QuizUIController.js";
 import { LoginController } from "./controllers/loginController.js";
+import { AdminController } from "./controllers/AdminController.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -27,6 +28,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector("header h1").addEventListener("click", ()=>{
         document.location.reload();
     }) 
+
+    document.getElementById('history').addEventListener("click",()=>{
+        quizCon.trySettingUserHistory();
+    })
+
+    document.getElementById('answersclose').addEventListener("click", ()=>{
+        document.getElementById('answersmodal').classList.add("hidden");
+    })
+
+    const adminCon = new AdminController();
+    document.getElementById('admin').addEventListener("click", () => {
+        adminCon.trySettingAdminOptions();
+    })
 })
 
 

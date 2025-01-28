@@ -23,5 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         loginController.tryRegisteringNewUser(signupform);
     }) 
+
 });
 

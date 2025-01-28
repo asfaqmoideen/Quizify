@@ -30,4 +30,44 @@ export class APIService{
     async submitQuiz(answers){
         return this.tryFetchingData(`mcqs/submit`, "POST" , { attempted : answers});
     }
+
+    async getHistory(){
+        return this.tryFetchingData('mcqs/history', "GET");
+    }
+
+    async getHistorybyId(id){
+        return this.tryFetchingData(`mcqs/history/${id}`, "GET");
+    }
+
+    async getAllUsers(){
+        return this.tryFetchingData(`users`, "GET");
+    }
+
+    async addUser(user){
+        return this.tryFetchingData(`users`, "GET", user);
+    }
+
+    async getUserById(id){
+        return this.tryFetchingData(`users/${id}`, "GET");
+    }
+
+    async updateUser(user){
+        return this.tryFetchingData(`users/${id}`, "PATCH");
+    }
+
+    async deleteUser(id){
+        return this.tryFetchingData(`users/${id}`,"DELETE");
+    }
+
+    async bulkUploadMcqs(file){
+        return this.tryFetchingData(`bulk-upload`, "POST", file);
+    }
+
+    async createMcq(mcq){
+        return this.tryFetchingData(`mcq`, "POST", mcq)
+    }
+
+    async uploadCertificateTemplate(file){
+        return this.tryFetchingData(`upload-template`, "POST", file)
+    }
 }
