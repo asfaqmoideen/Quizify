@@ -1,11 +1,11 @@
 import { UserConfirmationService } from "../services/UserConfirmationService";
-
-
+import { DOMService } from "../services/DOMService";
 
 export class QuizUIController {
     constructor(quizCOn) {
         this.quizCon = quizCOn;
         this.confirm = new UserConfirmationService();
+        this.domservice = new DOMService();
         this.typesDiv = document.getElementById("quiztypecont");
         this.attemptedAnswers = new Map();
         this.resultsKeys = ["total_score","total_attempts","percentage"]
@@ -24,8 +24,10 @@ export class QuizUIController {
     }
 
     enableAdminAccess(){
-        document.getElementById('admin').classList.remove("hidden");
-        document.querySelector("head title").textContent=" Quizify - Admin";
+        document.querySelectorAll(".headerlist .admin").forEach(ele => {
+            ele.classList.remove('hidden')
+        })
+        document.querySelector("head title").textContent="Admin - Quizify";
     }
 
     createQuizTypeBlocks(quizTypes) {
@@ -114,14 +116,9 @@ export class QuizUIController {
         })
         return submitButton;
     }
+
     hideQuiztypes(hide) {
         hide ?  this.typesDiv.style.display = "none" : this.typesDiv.style.display = "block";
-        // if (hide) {
-        //     this.typesDiv.style.display = "none";
-        // }
-        // else {
-        //     this.typesDiv.style.display = "block";
-        // }
     }
 
     displayResults(results) {
@@ -134,9 +131,7 @@ export class QuizUIController {
         document.getElementById("quizresults").classList.remove("hidden");
         document.getElementById("results-showanswers").addEventListener("click", ()=>{
             document.getElementById("quizresults").classList.add("hidden");
-           // document.location.reload();
             this.populateAnswers(results.data);
-
         })
 
     }
@@ -167,7 +162,6 @@ export class QuizUIController {
             radioBtn.type = "radio";
             radioBtn.id = `question_${answerIndex}_option_${key}`;
             radioBtn.value = key;
-            // radioBtn.disabled = true;
             if(key == answer.user_answer){
                 radioBtn.checked = true;
             }
@@ -201,12 +195,12 @@ export class QuizUIController {
 
     enableQuizContainer(title){
         document.getElementById("answersheading").textContent = title;
-        const container = document.getElementById("answersmodal");
-        container.classList.remove("hidden");
+        this.domservice.showModal(true, "answersmodal")
         const quizbox = document.getElementById("quizcontainer");
         quizbox.textContent = "";
         return quizbox;
     }
+
     displayHistory(histories){
         const table = document.querySelector("#history-table tbody");
         table.textContent = "";
@@ -253,7 +247,7 @@ export class QuizUIController {
 
     createActionBtn(historyId){
         const td = document.createElement("td");
-        td.textContent = "Show Answers"
+        td.innerHTML = `<i class="fa-regular fa-eye"></i> Show Answers`;
         td.onclick = ()=>{
             this.quizCon.tryDisplayingHistory(historyId)
         }
@@ -264,6 +258,10 @@ export class QuizUIController {
         const td = document.createElement("td");
         if(key == "attempted_at"){
             td.textContent = new Date(value).toLocaleDateString();
+            return td;
+        }
+        else if(key == "percentage"){
+            td.textContent = `${value}%`;
             return td;
         }
         td.textContent= value;

@@ -1,27 +1,27 @@
+import { DOMService } from "./DOMService";
+
 export class UserConfirmationService{
      constructor(){
       this.confirmTitle = document.getElementById("confirm-title");
       this.yesbtn = document.getElementById("yesbtn");
       this.notbtn = document.getElementById("nobtn");
-      this.confirm = document.getElementById("confirmation")
+      this.domservice = new DOMService();
      }
+
     getUserConfirmation(context) {
-        this.showConfirmationBlock(true);
+        this.domservice.showModal(true, "confirmation");
         this.confirmTitle.textContent = `Are you sure to ${context}?`;
     
         return new Promise((resolve) => {
           this.yesbtn.onclick = () => {
-            this.showConfirmationBlock(false);
+            this.domservice.showModal(false, "confirmation");
             resolve(true);
           };
           this.notbtn.onclick = () => {
-            this.showConfirmationBlock(false);
+            this.domservice.showModal(false, "confirmation");
             resolve(false);
           };
         });
       }
-    
-      showConfirmationBlock(value) {
-        value ? this.confirm.classList.remove("hidden") : this.confirm.classList.add("hidden");
-      }
+
 }

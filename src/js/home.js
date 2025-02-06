@@ -34,13 +34,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
 
     document.getElementById('answersclose').addEventListener("click", ()=>{
-        document.getElementById('answersmodal').classList.add("hidden");
+        quizUi.domservice.showModal(false, "answersmodal")
     })
 
     const adminCon = new AdminController();
     document.getElementById('admin').addEventListener("click", () => {
-        adminCon.trySettingAdminOptions();
+        adminCon.showAllUsers();
     })
+
+    document.getElementById('user-cancel').addEventListener('click', ()=>{
+        quizUi.domservice.showModal(false, "userformcont");
+    })
+
+    document.getElementById('adduser').addEventListener('click', ()=>{
+        quizUi.domservice.showModal(true, "userformcont");
+    })
+
+    const form = document.getElementById('userform');
+
+    form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const formData = new FormData(form);
+        const enteredData = Object.fromEntries(formData.entries());
+        adminCon.tryAddingUser(enteredData);
+        adminCon.showAllUsers();
+        quizUi.domservice.showModal(false, 'userformcont')
+
+    })
+
+    document.getElementById('quizbulkupload').addEventListener('click', ()=>{
+        quizUi.domservice.showModal(true, "uploadfilemodal");
+    })
+
+
+    document.getElementById('quizsubmit').addEventListener("click", () => {
+        const fileInput = document.getElementById("quizbulk");
+        const file = fileInput.files[0]; 
+        adminCon.tryUploadingFile(file);
+    });
+    
+
+    document.getElementById("update-user-cancel").addEventListener("click",()=>{
+        quizUi.domservice.showModal(false, "update-user-role");
+    });
+
+    document.getElementById("upload-cancel").addEventListener("click",()=>{
+        quizUi.domservice.showModal(false, "uploadfilemodal");
+    });
 })
 
 

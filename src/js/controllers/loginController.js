@@ -26,24 +26,22 @@ export class LoginController{
               password: password,
             }),
           })
-          .then(res => res.json())
-          .then(token => {
-            console.log(token);
-            sessionStorage.setItem("token", token.access_token);
-            document.location = "/src/pages/home.html";
-          })
+          .then(async(res)=> {
+            if(res.status == 401){
+              this.indexUi.displayError('login', "Incorrect Username or Password");
+            }
+            else if(res.status == 200){
+              const response = await res.json();
+              sessionStorage.setItem("token", response.access_token);
+              console.log(response.access_token);
+              document.location = "/src/pages/home.html";
+
+            }
+          }
+          )
           .catch(error => {
             this.indexUi.displayError('login', error.message);
           })
-          // const token = await this.quizApi.tryFetchingData("auth/login",
-          //   'POST',
-          //   JSON.stringify({
-          //     username: username,
-          //     password: password,
-          //   }),
-          // )
-          // sessionStorage.setItem("token", token.access_token);
-          // document.location = "/src/pages/home.html";
     }
 
     tryRegisteringNewUser({username :name , email, npassword, fpassword}) {

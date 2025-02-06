@@ -44,23 +44,23 @@ export class APIService{
     }
 
     async addUser(user){
-        return this.tryFetchingData(`users`, "GET", user);
+        return this.tryFetchingData(`users`, "POST", user);
     }
 
     async getUserById(id){
         return this.tryFetchingData(`users/${id}`, "GET");
     }
 
-    async updateUser(user){
-        return this.tryFetchingData(`users/${id}`, "PATCH");
+    async updateUser(user, id){
+        return this.tryFetchingData(`users/${id}`, "PATCH", user);
     }
 
     async deleteUser(id){
-        return this.tryFetchingData(`users/${id}`,"DELETE");
+        return this.tryFetchingData(`users/${id}`, "DELETE");
     }
 
     async bulkUploadMcqs(file){
-        return this.tryFetchingData(`bulk-upload`, "POST", file);
+        return this.uploadFetch(`bulk-upload`, "POST", file);
     }
 
     async createMcq(mcq){
@@ -68,6 +68,25 @@ export class APIService{
     }
 
     async uploadCertificateTemplate(file){
-        return this.tryFetchingData(`upload-template`, "POST", file)
+        return this.uploadFetch(`upload-template`, "POST", file)
     }
+
+    async uploadFetch(endpoint, method , bodyData){
+        console.log(bodyData);
+            try {
+                const response = await fetch(`${BASE_URL}/${endpoint}`,{
+                    method: method,
+                    headers : {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: bodyData
+                });
+    
+                return response.json();
+            }
+            catch(error){
+               throw error;
+            }
+        }
 }

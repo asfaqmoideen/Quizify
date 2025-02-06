@@ -57,6 +57,7 @@ footer{
     align-items: center;
     justify-content: center;
     background-color: plum;
+    padding: 1rem;
 }
 
 form{

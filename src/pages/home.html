@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizify</title>
-    <link rel="stylesheet" href="/src/css/style.css">
     <script src="/src/js/controllers/pageController.js"></script>
     <script type="module" src="/src/js/home.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/src/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
-    <div class="viewport">        
+<body>    
         <header>
             <h1>Quizify</h1> 
             <ul class="headerlist">
                 <li id="home" class="active">Home</li>
                 <li id="history">My Attempts</li>
-                <!-- <li id="profile">Profile</li> -->
-                <li id="admin" class="hidden">Manage Users</li>
+                <li id="quiz" class="hidden admin">Manage Quizes</li>
+                <li id="admin" class="hidden admin">Manage Users</li>
                 <li id="profilebtn" class="fa-solid fa-user"></li>
             </ul>
         </header>
@@ -32,26 +31,40 @@
                 <div id="quizcontainer"></div>
             </div> 
             <div id="home-content" class="content active">
+                <div class="home"> 
                     <div class="headgrp">
                         <h3 id="quizheading">Choose your Quiz type</h3>
                         <p id="error-home"></p>
                     </div>
                     <div class="quiz-type-container" id="quiztypecont"></div>
+                </div>
             </div>
             <div id="history-content" class="content">
                 <h1>History</h1>
                 <p id="error-history"></p>
-                <table id="history-table" class="table">
-                    <thead></thead>
-                    <tbody></tbody>
-                </table>
+                <div class="historycontainer">
+                    <table id="history-table" class="table">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
-            <!-- <div id="profile-content" class="content">
-                <h1>Profile</h1>
-                <p id="error-profile"></p>
-            </div> -->
+            <div id="quiz-content" class="content">
+                <div class="headgrp">
+                    <h1>Manage Quizes</h1>
+                </div>
+                <div class="centerdiv">
+                    <button type="button" class="btn" id="createnewmcq"><i class="fa-solid fa-square-plus"></i> Create New MCQ</button>
+                    <button type="button" class="btn" id="quizbulkupload"><i class="fa-solid fa-folder-plus"></i> Quiz Bulk Upload</button>
+                    <button type="button" class="btn" id="certificateupload"><i class="fa-solid fa-file-arrow-up"></i> Update Certificate Template</button>
+                </div>
+                <p id="error-quiz"></p>
+            </div>
             <div id="admin-content" class="content">
-                <h1>Admin </h1>
+                <div class="headgrp">
+                    <h1>All Users </h1>
+                    <button type="button" id="adduser">Add User</button>
+                </div>
                 <div class="adminoptions" id="adminoptions">
                     <table id="userstable">
                         <thead></thead>
@@ -60,7 +73,10 @@
                 </div>
                 <p id="error-admin"></p>
             </div>
-            <div class="container-confirmation hidden" id="confirmation">
+
+            </div>
+            <div id="toast-container"></div>
+            <div class="custom-modal hidden" id="confirmation">
                 <p id="confirm-title"></p>
                 <div class="btn-wrap">
                   <button type="button" id="yesbtn">Yes</button>
@@ -74,14 +90,74 @@
                     <li id="logout-btn-profilecard" class="textbtn">Logout</li>
                 </ul>
             </div>
-            <div id="quizresults" class="quizresults hidden">
-                <h3>Your results</h3>
+            <div id="quizresults" class="custom-modal hidden">
+                <h3>Your results  <span id="result-reaction"></span></h3>
                 <p> Total Score <span id="results-total_score"></span></p>
                 <p> Total Attempts <span id="results-total_attempts"></span></p>
                 <p> Percentage <span id="results-percentage"></span></p>
                 <p id="results-showanswers" class="textbtn">Show Answers</p>
             </div>
+
+            <div id="userformcont" class="custom-modal hidden">
+                <form id="userform">
+                        <div class="form-group">
+                            <h3>Add User Form</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">User Name</label>       
+                            <input type="text" placeholder="user" id="username" name="username" pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" required >
+                        </div>
+                        <div class="form-group">    
+                            <label for="email">E-mail</label>   
+                            <input type="email" placeholder="user@x.com" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" placeholder="password" id="password" name="password" pattern="^[A-Za-z\d@$!%*?&]+$" title="Only letters, numbers and spaces allowed" >
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role" id="role">
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" id="user-cancel">Cancel</button>
+                            <button type="submit" id="user-form-submit">Add User</button>
+                        </div>
+                </form>
+            </div>
+
+            <div id="update-user-role" class="custom-modal hidden">
+                <form  id="update-user-role-form">
+                        <h5>User Name : <span id="usernamespan"></span></h5>
+                    <div class="form-group">
+                        <label for="roleupdate">Role</label>
+                        <select name="role" id="roleupdate">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="update-user-cancel">Cancel</button>
+                        <button type="submit" id="update-user-submit">Update User</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="uploadfilemodal" class="custom-modal hidden">
+                <h3>Quiz Bulk Upload</h3>
+                <div class="form-group">
+                    <label for="quizbulk">Choose File</label>
+                    <input type="file" id="quizbulk">
+                </div>
+                <div class="form-group">
+                    <button type="button" id="upload-cancel">Cancel</button>
+                    <button type="button" id="quizsubmit">Upload</button>
+                </div>
+            </div>
         </main>
-    </div>
+<div class="background-modal hidden" id="bg-modal">
 </body>
 </html>

@@ -8,3 +8,10 @@ question : "What is the default value of a boolean variable in C#?",
 type : "csharp",
 user_answer: "b"
 }
+
+export const tableHeadings = [
+    { sno: "S. No"},
+    { username: "Name" },
+    { role: "Role" },
+    { action: "Action" },
+];
