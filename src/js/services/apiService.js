@@ -78,8 +78,9 @@ export class APIService{
                     method: method,
                     headers : {
                         'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/octet-stream", // Raw binary format
                     },
+        
                     body: bodyData
                 });
     

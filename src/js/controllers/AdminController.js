@@ -62,11 +62,30 @@ export class AdminController{
 
     async tryUploadingFile(file){
         try{
-            const response = await this.api.bulkUploadMcqs(file);
+            const binFile = await this.convertXlsxToBinary(file);
+            console.log(binFile); 
+            const response = await this.api.bulkUploadMcqs(binFile);
             this.toast.showToast(response, "success")
         }
         catch(error){
             this.toast.showToast(error, "error");
         }
     }
+
+    convertXlsxToBinary(file){
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+      
+          reader.onload = (event) => {
+            const binaryData = event.target.result;
+            resolve(binaryData);
+          };
+      
+          reader.onerror = (error) => {
+            reject(error);
+          };
+      
+          reader.readAsArrayBuffer(file);
+        });
+      };
 }

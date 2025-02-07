@@ -1,10 +1,12 @@
 import { UserConfirmationService } from "../services/UserConfirmationService";
 import { DOMService } from "../services/DOMService";
+import { ToastNotifyService } from "../services/ToastNotifyService";
 
 export class QuizUIController {
     constructor(quizCOn) {
         this.quizCon = quizCOn;
         this.confirm = new UserConfirmationService();
+        this.toast = new ToastNotifyService();
         this.domservice = new DOMService();
         this.typesDiv = document.getElementById("quiztypecont");
         this.attemptedAnswers = new Map();
@@ -111,7 +113,9 @@ export class QuizUIController {
         submitButton.addEventListener('click', ()=>{
             if(this.quizCon.trySubmittingQuiz(this.attemptedAnswers)){
                 this.attemptedAnswers.clear();
-                this.displayError('Quiz Submitted Successfully', "home");
+                this.domservice.showModal(false, "answersmodal");
+                this.toast.showToast('Quiz Submitted Successfully', 'success');
+              //  this.displayError('Quiz Submitted Successfully', "home");
             }
         })
         return submitButton;

@@ -51,6 +51,7 @@ header li .active{
     display: none; 
 }
 
+
 .content.active{
     margin: 1rem;
     display: block;
@@ -170,7 +171,7 @@ button{
 }
 
 .textbtn{
-    font-weight: bold;
+    font-weight: 600;
     color: black;
     cursor: pointer;
 }
@@ -251,6 +252,24 @@ table td{
     background-color: red;
 }
 
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
 .background-modal{
     position: fixed;
     height: 100%;
@@ -295,4 +314,35 @@ form{
 
 #user-cancel{
     background-color: rgb(174, 56, 56);
+}
+
+.resultsmodal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+#searchtype{
+    width: 30rem;
+}
+
+.search{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.centerdiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 10rem);
+}
+
+.buttondiv{
+    display: flex;
+    gap :3rem;
 }

@@ -32,10 +32,13 @@
             </div> 
             <div id="home-content" class="content active">
                 <div class="home"> 
-                    <div class="headgrp">
+                    <div class="search">
+                        <input type="text" id="searchtype" placeholder="Search Quiz Type" >
                         <h3 id="quizheading">Choose your Quiz type</h3>
                         <p id="error-home"></p>
                     </div>
+                    <!-- <div class="headgrp">
+                    </div> -->
                     <div class="quiz-type-container" id="quiztypecont"></div>
                 </div>
             </div>
@@ -54,9 +57,11 @@
                     <h1>Manage Quizes</h1>
                 </div>
                 <div class="centerdiv">
-                    <button type="button" class="btn" id="createnewmcq"><i class="fa-solid fa-square-plus"></i> Create New MCQ</button>
-                    <button type="button" class="btn" id="quizbulkupload"><i class="fa-solid fa-folder-plus"></i> Quiz Bulk Upload</button>
-                    <button type="button" class="btn" id="certificateupload"><i class="fa-solid fa-file-arrow-up"></i> Update Certificate Template</button>
+                    <div class="buttondiv">
+                        <button type="button" class="btn" id="createnewmcq"><i class="fa-solid fa-square-plus"></i> Create New MCQ</button>
+                        <button type="button" class="btn" id="quizbulkupload"><i class="fa-solid fa-folder-plus"></i> Quiz Bulk Upload</button>
+                        <button type="button" class="btn" id="certificateupload"><i class="fa-solid fa-file-arrow-up"></i> Update Certificate Template</button>
+                    </div>
                 </div>
                 <p id="error-quiz"></p>
             </div>
@@ -91,11 +96,13 @@
                 </ul>
             </div>
             <div id="quizresults" class="custom-modal hidden">
-                <h3>Your results  <span id="result-reaction"></span></h3>
-                <p> Total Score <span id="results-total_score"></span></p>
-                <p> Total Attempts <span id="results-total_attempts"></span></p>
-                <p> Percentage <span id="results-percentage"></span></p>
-                <p id="results-showanswers" class="textbtn">Show Answers</p>
+                <div class="resultsmodal">
+                    <h3>Your results <span id="result-reaction"></span></h3>
+                    <p> Total Score <span id="results-total_score"></span></p>
+                    <p> Total Attempts <span id="results-total_attempts"></span></p>
+                    <p> Percentage <span id="results-percentage"></span>%</p>
+                    <p id="results-showanswers" class="textbtn">Show Answers</p>
+                </div>
             </div>
 
             <div id="userformcont" class="custom-modal hidden">
@@ -150,7 +157,7 @@
                 <h3>Quiz Bulk Upload</h3>
                 <div class="form-group">
                     <label for="quizbulk">Choose File</label>
-                    <input type="file" id="quizbulk">
+                    <input type="file" id="quizbulk" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                 </div>
                 <div class="form-group">
                     <button type="button" id="upload-cancel">Cancel</button>
